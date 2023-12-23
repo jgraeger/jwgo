@@ -42,3 +42,11 @@ func KeyAlgorithmFrom[T SignatureAlgorithm | string](v T) (KeyAlgorithm, error) 
 	}
 	return alg, nil
 }
+
+func KeyAlgorithmMustFrom[T SignatureAlgorithm | string](v T) KeyAlgorithm {
+	alg, err := KeyAlgorithmFrom(v)
+	if err != nil {
+		panic(err)
+	}
+	return alg
+}

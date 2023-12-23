@@ -29,7 +29,7 @@ func TestParse(t *testing.T) {
 				assert.Equal(t, jwk.Signing, k.Usage())
 				assert.Equal(t, jwk.RSA, k.Type())
 				assert.Equal(t, "public:2fbc8e2a-bea4-4e47-81cd-fd83a90fe82d", k.ID())
-				assert.Equal(t, jwa.RS256, k.Algorithm())
+				assert.Equal(t, jwa.KeyAlgorithmMustFrom(jwa.RS256), k.Algorithm())
 
 				_, isRSAPubKey := k.(*jwk.RSAPublicKey)
 				assert.True(t, isRSAPubKey)

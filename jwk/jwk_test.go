@@ -24,37 +24,46 @@ func TestRSA(t *testing.T) {
 			{
 				Name: "SHA-256 Public Key",
 				JWK: `{
+					"kty": "RSA",
+					"alg": "RS256",
+					"e": "AQAB",
+					"use": "sig",
+					"n": "kMUCGoWr7_6rNzT5THxmHmBQw457ywXFxA9leV815SY9xGXir3KH4JRIm-jBn2k-eQ506RukOakCBldGDL1d4ZVKu7WzxIMScb79X-98BKfj8mS6kdz7gw6T8wCZ82zxjyKv0ePUd8ZaOVQqi3wrUPYa5dJgdO830NBoVf58b31reHEIpQRhEtT0FSQ5SFggieNoaWf6SWmxVKtScQm4Tuh0fyX_wXfjhAs66djFHUOTxJDICcpNmcKCDKU-gxo_NCpn3xZ51FNVShPqknclE05VKkL4iUu_1WBse0e1NeRhvfkuqrd11Ncx7X2QeXewc4w0iVtKmDeTU13ROj76rQ"
+				}}`,
+				Hash:     crypto.SHA256,
+				expected: MustBase64Decode(t, "BapMmDqQvHu4130aySp-GyzAY2AtIW_MKIIBYn-ev6k")},
+			// For the thumbprint calculations, only public key parameters are used.
+			// The thumbprint of a pubkey therefore matches the private key
+			{
+				Name: "SHA-256 Private Key",
+				JWK: `{
+					"alg": "RS256",
+					"p": "2XSYMo76V3B0uVypoTsgpigWsKGbxUTA6FeAMXDCeadMLlr5o-NzGZTjfI96r66SDZTQGegYtmoEKw1M0WQowAxPDwpJiimrDpAlEe_mAyEA9fUD6O6E4f9nQHz9kiNTQ0KrdxC-Itd9J4w--jnKI8ns0DI6XWCiZL4fDheXxdc",
+					"kty": "RSA",
+					"q": "qm4re5J4QEcLhYGRHHnvFTOoGzMMFBXc9qWy0CekjAEbTFEGZcKJ6aM7Z5Q5Yxk5EW0JZL-76otu5nBBwBfP1iMBfNkBMlQnJe23hE1VIsI4sy5JzpOtc1zyXubNoaz1l9buIIUQaBADo-CFJ0kCjsUc2Az2uVrWvePi8dTOKxs",
+					"d": "OsfjTMWNxIqRFn9p4gZ4qEjPQjfuR8b2P99IgnmINpzKY55C5p4IUcWjnbpqM8HV3e1ixuu0SL041z5EcRPKtLebepASh-34ZTr5QiTJJFLPGTKRFny1mscmh3ptCAvqIQYigYSSVnexVqm4BJ7ML7ldvocnJxOihCS62H_WIqYaqAmVQOrG6VCBq-QtiuXQP2YaNcO1G4CizWVK3kthYn3n8jXtsca4n9s8eIOZ7V5VemJVZ3MLQEQJHfBFHSorqI6U5a4aGK-hk4m7skgEG4-pMcIPP0SwmKeMSscA-zKk_sTZYWIZUXjNceLZDUrsgAYJ1GtCV5TzyO_RElzXuQ",
+					"e": "AQAB",
+					"use": "sig",
+					"qi": "e7iS_Lbz6hfOse3naZKEaWr5oOK0vXhIALDGINzh3y7kBRg-Jb1MI-wawr9QgyIpxancuDrc9-Is1dqpz0lzlvs8TK8DFNriZGprinLjllECZgN-34RFWwMEB7E6lFEV41Nc7RzABpidEujtnzqTNBlv8-QbLl0PmT21_S48UlM",
+					"dp": "Cct-r4hRLm8aUt8hpOmM5u8XVo1w_snCBrUqSQ_TMreebtgaNo-gN57FQG8WD6PFYGc7mG8j7dOIrIfE1gm07DGhvgOwnFCUK-vCP7SWn7101Z9btbpIsgVXGUiIA3Uj4vu1zX8rkVYzhPyEObEwsbv-tsIMbvhTWEZYD8JwS7E",
+					"dq": "kR6WL_acJj9YdCnLYjABgFAoCGEDG-cx62NUSyI2XnBiyi0EAYoQ3Lx9TMlNxDAqA8iQgxUv8Zsgp19W3TZpZrEQBzrQZgZ5_zXXWfRvVdWDai8z8Y6V1vGB_4UP-2bHCK-evFoRikp4jwYS20yzvNXipaUEQPg0eiSdjcXid5k",
+					"n": "kMUCGoWr7_6rNzT5THxmHmBQw457ywXFxA9leV815SY9xGXir3KH4JRIm-jBn2k-eQ506RukOakCBldGDL1d4ZVKu7WzxIMScb79X-98BKfj8mS6kdz7gw6T8wCZ82zxjyKv0ePUd8ZaOVQqi3wrUPYa5dJgdO830NBoVf58b31reHEIpQRhEtT0FSQ5SFggieNoaWf6SWmxVKtScQm4Tuh0fyX_wXfjhAs66djFHUOTxJDICcpNmcKCDKU-gxo_NCpn3xZ51FNVShPqknclE05VKkL4iUu_1WBse0e1NeRhvfkuqrd11Ncx7X2QeXewc4w0iVtKmDeTU13ROj76rQ"
+				}`,
+				Hash:     crypto.SHA256,
+				expected: MustBase64Decode(t, "BapMmDqQvHu4130aySp-GyzAY2AtIW_MKIIBYn-ev6k"),
+			},
+			{
+				Name: "SHA-1",
+				JWK: `{
 					"alg": "RS256",
 					"kty": "RSA",
 					"e": "AQAB",
 					"use": "sig",
-					"kid": "jcnzM5SYcyC8PPztdZ2exBOyk0G_1EBw-ggiWXrHFMc",
-					"n": "rZDnqx3JBZ1PoBoU1NCfEGQ5vy8WUP_0xKpCm9GeuEnO3SI_SeA4IU9udUrRPpIzt9fT7zsma7ZRlvdvuQpk-mz1QuQP-wHeKXVoss5bgM5jv1SIfbJdvn6JFJ_I2L6Mh2WgE6huerUt-xnkyuOfO7MEStdySmaydVUWVMA18AYqj3wurL5p97GCFC5knquXoWQXqSXGOsukWqeha3QcaRdh3PuB_2GmBQJwhk5TlrIO_hkadRbwg2M6texucoBWdL-i5G2WYfeQ4lADUz25yTR0jIEzDLNDVW3Z36ANBiCjRTsqsacOe75VisqgOaVP2KnrFDqxsIwSYexNM9aWHQ"
+					"n": "08RNDYVYx72xVTjbsaIr88xOj-Lzsjk_ZJrILNfUhkEZneNOdeWJtw6UMRNSu7gwARQHR6V373Bm1ubP-KguOGx78r4CPDoPMFT5i4WNmGjiOllwfc_KI4YkIgayEUyxbyIZ4JhxpLkn3UvaYmcmSjndHR7Yaydx3TqTarBZiwnm3W71PY-Ufe7t9El83LtAfCyR0erbmx2oJBPQ3o_MPJKi_51PhgaHSENQZjl8yEPinZfevm8qz1CPt4UPiYzWdJ2LSEksMXdus2T3b2z01Jw2K1NWSeSWlqW9nYCrGXXTvHvi7SCGwerDgQUp968Y3YCcmApPnsxO2lllrRUS5w"
 				}`,
-				Hash:     crypto.SHA256,
-				expected: []byte{189, 81, 246, 217, 240, 77, 160, 53, 172, 255, 163, 10, 111, 223, 82, 198, 46, 64, 14, 236, 199, 110, 66, 69, 227, 26, 211, 155, 238, 166, 20, 33},
+				Hash:     crypto.SHA1,
+				expected: MustBase64Decode(t, "mhvXBuyvZ6RSra7WKjR2ZrTJsL0"),
 			},
-			// For the thumbprint calculations, only public key parameters are used.
-			// The thumbprint of a pubkey therefore matches the private key
-			// {
-			// 	Name: "SHA-256 Private Key",
-			// 	JWK: `{
-			// 		"alg": "RS256",
-			// 		"p": "5EXZdUzc7Sij0P9L2QFwI8p9qzy1e4pzSIpBOHJeKb-LZIsXENzjN6u9i2K5EF1b3Z0Ly72WAwwl9HqMaGdKGpzjeV0tX80fekBYABevFaeSbkNPAg6kPcRBhTl5ZmaBAMb8m53mE85esjI1jfisr-hqJd6wPMBaAphSR9JwIOs",
-			// 		"kty": "RSA",
-			// 		"q": "wqXyExsfB47637IyTb06CqDlQ6A4iAzdCGoFTis4OcuyPgSjYVpHu1zn9lsvhUq9Bzc36sk_0lglCIa74y9SJYqEtNcls9uti4pTuHKAFqzSFHm9Re8nSvlGARN_a1BP6wN4S275Y2pZL1BuRjVGWGWRLyHjEuEnuo9mJXDqoxc",
-			// 		"d": "Ahmjw_1LRmcd5IkMQXr4wcEEtdyC_53pP0v0HGCP9BjoiOJ2M5Wj-Ds20fKCz6gDOjFBXj6v-1OsbxA1aN7IVANngFS0IMxn_MZv6uH2V3un11PVhvfWjIyJahd43a6IksbXBgXeuFti4AvzKcVRUu6ambE7r8zIUgUijQn6XRog4aUsjd5wfsL7h58sUH6T4FRpQvdVwpambrG0GlOZfg25c9zarQiEZ-tT9FbO0olF6lWrrOFay6iGbp4h0dlTr8HkJpFbjZQHNNUHFqG3cndlrKX0hiylpFrkHf0qCY6kYLbvcJn9qZD1bHfTtjyFAxeTt08qL5Zna5nfFtDYvQ",
-			// 		"e": "AQAB",
-			// 		"use": "sig",
-			// 		"kid": "jcnzM5SYcyC8PPztdZ2exBOyk0G_1EBw-ggiWXrHFMc",
-			// 		"qi": "rQarz3GVlXpfXCJvkNKLJEFgSP3HQqgqcD4Mr69m6TkTqJw0lU20ceXPaDqKQY7gMxTVCyYeNyx462yrkciYcxa4pB-4kDlH6jZQ1S-uMpc9sgaSMwfk_cbxT8FneQraWnMlkdnXRq78RhK38mJ5KS9-pZZMAhgN8IMYE4kRnAE",
-			// 		"dp": "DFc2XWANZYjX6lmS6SVpwZWV26cJjKc8ekR3KC0OqCUhzQqz8YZvhjfzpFBu_tJ9P-rYk2gpbvq-JoxlgNNsrymiJpKB_HbjZ8GIwGCHZ51Kjkl3QP43pNsyS5iC1qVd_gPD7knIAXQbrHiIaqdx9oSTEH8MegxQEWnYsOdQhoc",
-			// 		"dq": "VnkYmSpUV6xKgbSNqoGlVnFySN_WHYLxczp-juKegPaggfLXjnloIrG8j3KlIuc4IQuD-PddNhpYoXgR4nT0Xp8yI5DtPAEdET_rv6aGhwxR7CzFTFtZrnIdin7Z_ZfZWUPaXlC31FW7t0xZITGrxbuhiznXwlxqpPPt4jZO1xM",
-			// 		"n": "rZDnqx3JBZ1PoBoU1NCfEGQ5vy8WUP_0xKpCm9GeuEnO3SI_SeA4IU9udUrRPpIzt9fT7zsma7ZRlvdvuQpk-mz1QuQP-wHeKXVoss5bgM5jv1SIfbJdvn6JFJ_I2L6Mh2WgE6huerUt-xnkyuOfO7MEStdySmaydVUWVMA18AYqj3wurL5p97GCFC5knquXoWQXqSXGOsukWqeha3QcaRdh3PuB_2GmBQJwhk5TlrIO_hkadRbwg2M6texucoBWdL-i5G2WYfeQ4lADUz25yTR0jIEzDLNDVW3Z36ANBiCjRTsqsacOe75VisqgOaVP2KnrFDqxsIwSYexNM9aWHQ"
-			// 	}`,
-			// 	Hash:     crypto.SHA256,
-			// 	expected: MustBase64Decode(t, "jcnzM5SYcyC8PPztdZ2exBOyk0G_1EBw-ggiWXrHFMc"),
-			// },
 		} {
 			tc := tt
 			t.Run(tc.Name, func(t *testing.T) {
